@@ -42,14 +42,15 @@ function SignupScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.welcome}>
-        <Text style={styles.welcomeText}>Sign Up</Text>
+        <Text style={styles.welcomeText}>Register</Text>
         <Text style={styles.studentText}>Student Management System</Text>
       </View>
-      <AppTextInput placeholder="Username" icon="email" name="Username" />
+      <AppTextInput label="Email" placeholder="Email" icon="email" name="email" />
       <AppTextInput
         placeholder="Password"
         icon="lock"
         name="Password"
+        label="Password"
         onChangeText={value => handlePasswordChange(value)}
         secureTextEntry={data.secureTextEntry ? true : false}
       />
@@ -68,6 +69,7 @@ function SignupScreen() {
         placeholder="Confirm Password"
         icon="lock"
         name="Confirm Password"
+        label="Confirm Password"
         onChangeText={value => handlePasswordChange(value)}
         secureTextEntry={true}
         // secureTextEntry={data.secureTextEntry1 ? true : false}
@@ -101,9 +103,9 @@ const styles = StyleSheet.create({
   },
 
   welcome: {
-    marginTop: 40,
+    marginTop: 30,
     width: '100%',
-    marginBottom: 110,
+    marginBottom: 90,
   },
 
   welcomeText: {
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: 'absolute',
     right: 25,
-    paddingTop: 50,
+    paddingTop: 20,
     justifyContent:'center',
     alignItems: 'center',
   },
