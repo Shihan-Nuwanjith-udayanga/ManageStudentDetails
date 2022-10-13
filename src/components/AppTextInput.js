@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     // padding: 15,
     marginVertical: 10,
     borderWidth: 1,
-    borderColor: '#000'
+    borderColor: colors.medium
   },
 
   icon: {
