@@ -1,12 +1,16 @@
 import React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/core';
 
 import AppTextInput from './../components/AppTextInput.js';
 import AppButton from './../components/AppButton.js';
 import colors from '../config/Colors.js';
 
 function LoginScreen() {
+
+   const navigation = useNavigation();
+
   const [data, setData] = React.useState({
     password: '',
     secureTextEntry: true,
@@ -31,7 +35,7 @@ function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.welcome}>
-        <Text style={styles.welcomeText}>Welcome</Text>
+        <Text style={styles.welcomeText}>Log In</Text>
         <Text style={styles.studentText}>Student Management System</Text>
       </View>
       <AppTextInput placeholder="Username" icon="email" name="Username" />
@@ -60,13 +64,13 @@ function LoginScreen() {
 
       <View style={styles.socialIcon}>
         <TouchableOpacity>
-          <MaterialCommunityIcons name="facebook" style={{fontSize: 50}} />
+          <MaterialCommunityIcons name="facebook" style={{fontSize: 50, color: colors.facebook}} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <MaterialCommunityIcons name="google" style={{fontSize: 50}} />
+          <MaterialCommunityIcons name="google" style={{fontSize: 50 , color: colors.google }}/>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('SignupScreen')}>
         <Text style={styles.signup}>Have Account Sign up</Text>
       </TouchableOpacity>
     </View>
@@ -82,10 +86,9 @@ const styles = StyleSheet.create({
   },
 
   welcome: {
-    backgroundColor: 'white',
-    flex: 0.5,
     width: '100%',
-    marginBottom: 150,
+    marginBottom: 100,
+    marginTop: 50,
   },
 
   welcomeText: {
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
 
   signup: {
     fontSize: 16,
-    marginTop: 10,
+    padding: 10,
     color: colors.button,
     fontWeight: 'bold',
   },
