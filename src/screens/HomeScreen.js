@@ -5,7 +5,6 @@ import {useNavigation} from '@react-navigation/core';
 
 import colors from '../config/Colors.js';
 import AppButton from '../components/AppButton.js';
-import AddStudentDetailsScreen from './AddStudentDetailsScreen';
 
 function HomeScreen() {
   const navigation = useNavigation();
