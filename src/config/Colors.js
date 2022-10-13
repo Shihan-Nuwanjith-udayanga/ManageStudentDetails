@@ -1,5 +1,6 @@
-export default{
-    white: '#ffff',
-    black: '#0000',
-    medium: '#6e6969',
+export default {
+  white: '#fff',
+  black: '#000',
+  medium: '#6e6969',
+  light: '#f8f4f4',
 };
