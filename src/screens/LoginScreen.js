@@ -38,11 +38,12 @@ function LoginScreen() {
         <Text style={styles.welcomeText}>Log In</Text>
         <Text style={styles.studentText}>Student Management System</Text>
       </View>
-      <AppTextInput placeholder="Username" icon="email" name="Username" />
+      <AppTextInput label="Email" placeholder="Email" icon="email" name="email" />
       <AppTextInput
         placeholder="Password"
         icon="lock"
         name="Password"
+        label="Password"
         onChangeText={value => handlePasswordChange(value)}
         secureTextEntry={data.secureTextEntry ? true : false}
       />
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   welcome: {
     width: '100%',
     marginBottom: 100,
-    marginTop: 50,
+    marginTop: 40,
   },
 
   welcomeText: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   eyeIcon: {
     position: 'absolute',
     right: 25,
-    paddingTop: 50,
+    paddingTop: 65,
   },
 
   forgot: {
