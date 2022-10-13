@@ -1,15 +1,44 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 import AppTextInput from './../components/AppTextInput.js';
 import AppButton from './../components/AppButton.js';
 import colors from '../config/Colors.js';
 
 function LoginScreen() {
+  useEffect(() => {
+    GoogleSignin.configure();
+  }, []);
 
-   const navigation = useNavigation();
+  const googleLogin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('User info', userInfo);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        console.log(error);
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+        console.log(error);
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+        console.log(error);
+      } else {
+        // some other error happened
+        console.log(error);
+      }
+    }
+  };
+
+  const navigation = useNavigation();
 
   const [data, setData] = React.useState({
     password: '',
@@ -38,7 +67,12 @@ function LoginScreen() {
         <Text style={styles.welcomeText}>Log In</Text>
         <Text style={styles.studentText}>Student Management System</Text>
       </View>
-      <AppTextInput label="Email" placeholder="Email" icon="email" name="email" />
+      <AppTextInput
+        label="Email"
+        placeholder="Email"
+        icon="email"
+        name="email"
+      />
       <AppTextInput
         placeholder="Password"
         icon="lock"
@@ -65,13 +99,19 @@ function LoginScreen() {
 
       <View style={styles.socialIcon}>
         <TouchableOpacity>
-          <MaterialCommunityIcons name="facebook" style={{fontSize: 50, color: colors.facebook}} />
+          <MaterialCommunityIcons
+            name="facebook"
+            style={{fontSize: 50, color: colors.facebook}}
+          />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <MaterialCommunityIcons name="google" style={{fontSize: 50 , color: colors.google }}/>
+        <TouchableOpacity onPress={googleLogin}>
+          <MaterialCommunityIcons
+            name="google"
+            style={{fontSize: 50, color: colors.google}}
+          />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={()=>navigation.navigate('SignupScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
         <Text style={styles.signup}>Have Account Sign up</Text>
       </TouchableOpacity>
     </View>
