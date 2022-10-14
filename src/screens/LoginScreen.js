@@ -63,6 +63,7 @@ function LoginScreen() {
     }
   };
 
+  //======Sign in with Google=======
   useEffect(() => {
     GoogleSignin.configure();
   }, []);
@@ -89,8 +90,11 @@ function LoginScreen() {
     }
   };
 
+  //react native Navigation statement
   const navigation = useNavigation();
 
+
+  // ====== Change password eye Icon =========
   const [data, setData] = React.useState({
     password: '',
     secureTextEntry: true,
