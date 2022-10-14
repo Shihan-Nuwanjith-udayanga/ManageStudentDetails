@@ -16,7 +16,7 @@ function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddStudentDetailsScreen')}>
           <MaterialCommunityIcons
             name="keyboard-backspace"
             style={styles.icon}

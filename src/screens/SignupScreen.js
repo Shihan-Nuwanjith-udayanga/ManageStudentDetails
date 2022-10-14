@@ -33,7 +33,7 @@ function SignupScreen() {
 
   const setUserData = async () => {
     if ( email.length == 0 || password.length == 0 || confirmPassword.length == 0){
-      Alert.alert('Warning!', 'You Want to Register');
+      // Alert.alert('Warning!', 'You Want to Register');
     } else {
       try {
         var user = {

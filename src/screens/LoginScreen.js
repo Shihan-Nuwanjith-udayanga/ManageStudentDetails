@@ -24,8 +24,8 @@ function LoginScreen() {
     try {
       AsyncStorage.getItem('UserData').then(value => {
         if (value != null) {
-          navigation.navigate('LoginScreen');
-          Alert.alert('Registration Successfully...!');
+          navigation.navigate('AddStudentDetailsScreen');
+          Alert.alert('Login Successfully...!');
         }
       });
     } catch (error) {
@@ -38,7 +38,7 @@ function LoginScreen() {
       email.length == 0 ||
       password.length == 0
     ) {
-      Alert.alert('Warning!', 'Empty Email and Password');
+      // Alert.alert('Warning!', 'Empty Email and Password');
     } else {
       try {
         var user = {
@@ -46,9 +46,9 @@ function LoginScreen() {
           Password: password,
         };
         await AsyncStorage.setItem('UserData', JSON.stringify(user));
-        Alert.alert('Registration Successfully...!');
+        Alert.alert('Login Successfully...!');
         console.log(user);
-        navigation.navigate('HomeScreen');
+        navigation.navigate('AddStudentDetailsScreen');
       } catch (error) {
         console.warn(error);
       }
@@ -156,7 +156,7 @@ function LoginScreen() {
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')}>
-        <Text style={styles.signup}>Have Account Sign up</Text>
+        <Text style={styles.signup}>Need Account Sign up?</Text>
       </TouchableOpacity>
     </View>
   );

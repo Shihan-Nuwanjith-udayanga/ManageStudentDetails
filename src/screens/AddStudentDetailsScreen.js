@@ -53,7 +53,7 @@ function AddStudentDetailsScreen() {
       parentContactNumber.length == 0 ||
       parentEmail.length == 0
     ) {
-      Alert.alert('Warning!', 'Please Input Your Data!');
+      // Alert.alert('Warning!', 'Please Input Your Data!');
     } else {
       try {
         var details = {
@@ -86,7 +86,7 @@ function AddStudentDetailsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
           <MaterialCommunityIcons
             name="keyboard-backspace"
             style={styles.icon}
