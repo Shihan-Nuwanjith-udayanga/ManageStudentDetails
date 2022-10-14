@@ -16,6 +16,14 @@ function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // const validation(()=>{
+  //   if(email == "Shihannuwanjith@gmail.com" && password == "123"){
+  //     navigation.navigate('AddStudentDetailsScreen')
+  //   }else{
+  //     Alert.alert("User email or Password incorrect..!")
+  //   }
+  // });
+
   useEffect(() => {
     setUserData();
   }, []);
