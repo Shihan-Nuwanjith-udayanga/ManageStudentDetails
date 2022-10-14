@@ -1,13 +1,17 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation, useRoute} from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import colors from '../config/Colors.js';
 import AppButton from '../components/AppButton.js';
 
 function HomeScreen() {
   const navigation = useNavigation();
+
+  // const [details, setDetails] = useState([]);
+  const route = useRoute();
 
   return (
     <View style={styles.container}>
@@ -28,7 +32,17 @@ function HomeScreen() {
           onPress={() => navigation.navigate('AddStudentDetailsScreen')}
         />
       </View>
-      <ScrollView style={styles.scrollView}></ScrollView>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.view}>
+          <Text style={styles.text}>Name: {route.params.firstName}</Text>
+          <Text style={styles.text}>Last Name: {route.params.lastName}</Text>
+          <Text style={styles.text}>Contact Number: {route.params.contactNumber}</Text>
+          <Text style={styles.text}>Email: {route.params.email}</Text>
+          <Text style={styles.text}>Parent Name: {route.params.parentName}</Text>
+          <Text style={styles.text}>ParentContactNumber: {route.params.parentContactNumber}</Text>
+          <Text style={styles.text}>Patent Email: {route.params.parentEmail}</Text>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -38,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.white,
   },
 
   header: {
@@ -62,8 +77,24 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
+    width: '100%',
     backgroundColor: colors.white,
   },
+
+  view: {
+    backgroundColor: colors.light,
+    padding: 10,
+    width: '95%',
+    justifyContent: 'center',
+    marginLeft: 10,
+    borderRadius: 10,
+  },
+
+  text: {
+    fontSize: 16,
+    color: colors.black
+  },
+
 });
 
 export default HomeScreen;
