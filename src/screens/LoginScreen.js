@@ -1,17 +1,60 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppTextInput from './../components/AppTextInput.js';
 import AppButton from './../components/AppButton.js';
 import colors from '../config/Colors.js';
 
 function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    setUserData();
+  }, []);
+
+  const getData = () => {
+    try {
+      AsyncStorage.getItem('UserData').then(value => {
+        if (value != null) {
+          navigation.navigate('LoginScreen');
+          Alert.alert('Registration Successfully...!');
+        }
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  const setUserData = async () => {
+    if (
+      email.length == 0 ||
+      password.length == 0
+    ) {
+      Alert.alert('Warning!', 'Empty Email and Password');
+    } else {
+      try {
+        var user = {
+          Email: email,
+          Password: password,
+        };
+        await AsyncStorage.setItem('UserData', JSON.stringify(user));
+        Alert.alert('Registration Successfully...!');
+        console.log(user);
+        navigation.navigate('HomeScreen');
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  };
+
   useEffect(() => {
     GoogleSignin.configure();
   }, []);
@@ -72,13 +115,14 @@ function LoginScreen() {
         placeholder="Email"
         icon="email"
         name="email"
+        onChangeText={value => setEmail(value)}
       />
       <AppTextInput
         placeholder="Password"
         icon="lock"
         name="Password"
         label="Password"
-        onChangeText={value => handlePasswordChange(value)}
+        onChangeText={value => setPassword(value)}
         secureTextEntry={data.secureTextEntry ? true : false}
       />
       <TouchableOpacity onPress={updateSecureTextEntry} style={styles.eyeIcon}>
@@ -91,7 +135,7 @@ function LoginScreen() {
           <MaterialCommunityIcons name="eye-outline" style={{fontSize: 25}} />
         )}
       </TouchableOpacity>
-      <AppButton title="Log in" />
+      <AppButton title="Log in" onPress={setUserData} />
 
       <TouchableOpacity>
         <Text style={styles.forgot}>Forgot Password?</Text>

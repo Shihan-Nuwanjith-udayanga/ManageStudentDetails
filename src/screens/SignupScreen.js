@@ -1,13 +1,55 @@
-import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React,{useEffect, useState} from 'react';
+import {View, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppTextInput from './../components/AppTextInput.js';
 import AppButton from './../components/AppButton.js';
 import colors from '../config/Colors.js';
 
 function SignupScreen() {
+ 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  useEffect(() => {
+    setUserData();
+  }, []);
+
+  const getData = () => {
+    try {
+      AsyncStorage.getItem('UserData').then(value => {
+        if (value != null) {
+          navigation.navigate('LoginScreen');
+          Alert.alert('Registration Successfully...!');
+        }
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
+  const setUserData = async () => {
+    if ( email.length == 0 || password.length == 0 || confirmPassword.length == 0){
+      Alert.alert('Warning!', 'You Want to Register');
+    } else {
+      try {
+        var user = {
+          Email: email,
+          Password: password,
+          ConfirmPassword: confirmPassword,
+        };
+        await AsyncStorage.setItem('UserData', JSON.stringify(user));
+        Alert.alert('Registration Successfully...!');
+        console.log(user);
+        navigation.navigate('LoginScreen');
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  };
 
   const navigation = useNavigation();
 
@@ -32,26 +74,25 @@ function SignupScreen() {
     });
   };
 
-  //   const updateSecureTextEntry1 = () => {
-  //     setData({
-  //       ...data,
-  //       secureTextEntry: !data.secureTextEntry1,
-  //     });
-  //   };
-
   return (
     <View style={styles.container}>
       <View style={styles.welcome}>
         <Text style={styles.welcomeText}>Register</Text>
         <Text style={styles.studentText}>Student Management System</Text>
       </View>
-      <AppTextInput label="Email" placeholder="Email" icon="email" name="email" />
+      <AppTextInput
+        label="Email"
+        placeholder="Email"
+        icon="email"
+        name="email"
+        onChangeText={value => setEmail(value)}
+      />
       <AppTextInput
         placeholder="Password"
         icon="lock"
-        name="Password"
+        name="password"
         label="Password"
-        onChangeText={value => handlePasswordChange(value)}
+        onChangeText={value => setPassword(value)}
         secureTextEntry={data.secureTextEntry ? true : false}
       />
       <TouchableOpacity onPress={updateSecureTextEntry} style={styles.eyeIcon}>
@@ -68,9 +109,9 @@ function SignupScreen() {
       <AppTextInput
         placeholder="Confirm Password"
         icon="lock"
-        name="Confirm Password"
+        name="confirmPassword"
         label="Confirm Password"
-        onChangeText={value => handlePasswordChange(value)}
+        onChangeText={value => setConfirmPassword(value)}
         secureTextEntry={true}
         // secureTextEntry={data.secureTextEntry1 ? true : false}
       />
@@ -86,8 +127,10 @@ function SignupScreen() {
           <MaterialCommunityIcons name="eye-outline" style={{fontSize: 25}} />
         )}
       </TouchableOpacity> */}
-      <AppButton title="Sign Up" />
-      <TouchableOpacity style={styles.loginTouchable} onPress={()=>navigation.navigate('LoginScreen')}>
+      <AppButton title="Sign Up" onPress={setUserData} />
+      <TouchableOpacity
+        style={styles.loginTouchable}
+        onPress={() => navigation.navigate('LoginScreen')}>
         <Text style={styles.signup}>Already Have Account? Login</Text>
       </TouchableOpacity>
     </View>
@@ -126,7 +169,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 25,
     paddingTop: 20,
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
@@ -160,7 +203,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
 });
 
 export default SignupScreen;
