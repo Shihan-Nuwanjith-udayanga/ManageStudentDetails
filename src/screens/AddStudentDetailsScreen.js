@@ -28,8 +28,7 @@ function AddStudentDetailsScreen() {
 
   useEffect(() => {
     setData();
-  },[])
-
+  }, []);
 
   const getData = () => {
     try {
@@ -45,29 +44,44 @@ function AddStudentDetailsScreen() {
   };
 
   const setData = async () => {
-    if(firstName.length == 0 || lastName.length == 0 || contactNumber.length == 0 || email.length == 0 ||
-      parentName.length == 0 || parentContactNumber.length == 0 || parentEmail.length == 0){
-        Alert.alert("Warning!", "Please Input Your Data!");
-      }else{
-        try {
-          var details = {
-            FirstName: firstName,
-            LastName: lastName,
-            ContactNumber: contactNumber,
-            Email: email,
-            ParentName: parentName,
-            ParentContactNumber: parentContactNumber,
-            ParentEmail: parentEmail,
-          };
-          await AsyncStorage.setItem('StudentData', JSON.stringify(details));
-          Alert.alert("Student Data Add Successfully...!");
-          console.log(details);
-          navigation.navigate('HomeScreen');
-        } catch (error) {
-          console.warn(error);
-        }
+    if (
+      firstName.length == 0 ||
+      lastName.length == 0 ||
+      contactNumber.length == 0 ||
+      email.length == 0 ||
+      parentName.length == 0 ||
+      parentContactNumber.length == 0 ||
+      parentEmail.length == 0
+    ) {
+      Alert.alert('Warning!', 'Please Input Your Data!');
+    } else {
+      try {
+        var details = {
+          FirstName: firstName,
+          LastName: lastName,
+          ContactNumber: contactNumber,
+          Email: email,
+          ParentName: parentName,
+          ParentContactNumber: parentContactNumber,
+          ParentEmail: parentEmail,
+        };
+        await AsyncStorage.setItem('StudentData', JSON.stringify(details));
+        Alert.alert('Student Data Add Successfully...!');
+        console.log(details);
+        navigation.navigate('HomeScreen', {
+          firstName: firstName,
+          lastName: lastName,
+          contactNumber: contactNumber,
+          email: email,
+          parentName: parentName,
+          parentContactNumber: parentContactNumber,
+          parentEmail: parentEmail,
+        });
+      } catch (error) {
+        console.warn(error);
       }
-  }
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -145,9 +159,7 @@ function AddStudentDetailsScreen() {
             onChangeText={value => setParentEmail(value)}
             style={styles.input}
           />
-          {/* {title.trim() || desc.trim() ? ( */}
           <AppButton title="Submit" onPress={setData} />
-          {/* ) : null} */}
           <View style={{margin: 50}}></View>
         </View>
       </ScrollView>
